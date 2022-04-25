@@ -3,13 +3,20 @@ package com.andreromano.gameoflife
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.Rect
 
 @Suppress("RedundantIf")
 class Game {
 
-    private val yellowPaint = Paint().apply {
+    private val fillPaint = Paint().apply {
         style = Paint.Style.FILL
         color = Color.YELLOW
+    }
+
+    private val strokePaint = Paint().apply {
+        style = Paint.Style.STROKE
+        color = Color.BLACK
+        strokeWidth = 2f
     }
 
     val cells = mutableSetOf<Cell>()
@@ -93,7 +100,7 @@ class Game {
             if (cell.y > highY) highY = cell.y
         }
 
-        val gridSize = 20
+        val gridSize = 40
         val minMargin = 0
         val maxMargin = 6
         val visibleCellsX = highX - lowX + maxMargin * 2
@@ -111,13 +118,14 @@ class Game {
         cells.forEach { cell ->
             val left = (cell.x - viewportStartX + 0) * cellSize
             val top = (cell.y - viewportStartY + 0) * cellSize
-            canvas.drawRect(
-                left * 1.0f,
-                top * 1.0f,
-                left + cellSize * 1.0f,
-                top + cellSize * 1.0f,
-                yellowPaint
+            val rect = Rect(
+                left,
+                top,
+                left + cellSize,
+                top + cellSize
             )
+            canvas.drawRect(rect, fillPaint)
+            canvas.drawRect(rect, strokePaint)
         }
     }
 
