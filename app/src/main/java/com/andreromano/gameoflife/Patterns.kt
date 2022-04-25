@@ -1,21 +1,20 @@
 package com.andreromano.gameoflife
 
-interface Pattern {
-    val gameboard: String
-}
+import kotlin.random.Random
+
+
 object Patterns {
 
-    enum class Still(override val gameboard: String) : Pattern {
-        BLOCK(
+    object Still {
+        val Block =
             """
         ▯▯▯▯
         ▯▮▮▯
         ▯▮▮▯
         ▯▯▯▯
     """.trimIndent()
-        ),
 
-        BEEHIVE(
+        val BeeHive =
             """
         ▯▯▯▯▯▯
         ▯▯▮▮▯▯
@@ -23,9 +22,8 @@ object Patterns {
         ▯▯▮▮▯▯
         ▯▯▯▯▯▯
     """.trimIndent()
-        ),
 
-        LOAF(
+        val Loaf =
             """
         ▯▯▯▯▯▯
         ▯▯▮▮▯▯
@@ -34,27 +32,25 @@ object Patterns {
         ▯▯▯▮▯▯
         ▯▯▯▯▯▯
     """.trimIndent()
-        )
     }
 
-    enum class Oscillators(override val gameboard: String) : Pattern {
-        Blinker(
+    object Oscillators {
+        val Blinker =
             """
         ▯▯▯▯▯
         ▯▮▮▮▯
         ▯▯▯▯▯
     """.trimIndent()
-        ),
 
-        Toad(
+        val Toad =
             """
         ▯▯▯▯▯▯
         ▯▯▮▮▮▯
         ▯▮▮▮▯▯
         ▯▯▯▯▯▯
     """.trimIndent()
-        ),
-        PentaDecathlon(
+
+        val PentaDecathlon =
             """
         ▯▯▯▯▯
         ▯▯▮▯▯
@@ -69,11 +65,11 @@ object Patterns {
         ▯▯▮▯▯
         ▯▯▯▯▯
     """.trimIndent()
-        ),
+
     }
 
-    enum class Spaceship(override val gameboard: String) : Pattern {
-        Glider(
+    object Spaceship {
+        val Glider =
             """
         ▯▯▯▯▯
         ▯▯▮▯▯
@@ -81,17 +77,37 @@ object Patterns {
         ▯▮▮▮▯
         ▯▯▯▯▯
     """.trimIndent()
-        ),
 
-        LWSS(
+        val LWSS =
             """
-        ▯▯▯▯▯
+        ▯▯▯▯▯▯
         ▯▮▯▯▮▯
         ▯▯▯▯▯▮
         ▯▮▯▯▯▮
         ▯▯▮▮▮▮
     """.trimIndent()
-        ),
+    }
+
+    object Generators {
+        val Acorn =
+            """
+        ▯▯▯▯▯▯▯▯▯
+        ▯▯▮▯▯▯▯▯▯
+        ▯▯▯▯▮▯▯▯▯
+        ▯▮▮▯▯▮▮▮▯
+        ▯▯▯▯▯▯▯▯▯
+    """.trimIndent()
+    }
+
+    object Rand {
+        fun generate(width: Int, height: Int): String = buildString {
+            (0..height).forEach {
+                (0..width).forEach {
+                    if (Random.nextBoolean()) append("▮") else append("▯")
+                }
+                append("\n")
+            }
+        }
     }
 
 }

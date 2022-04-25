@@ -42,7 +42,9 @@ class RenderView @JvmOverloads constructor(
     }
 
     override fun run() {
-        game.loadLevel(Patterns.Oscillators.Blinker)
+//        game.loadLevel(Patterns.Spaceship.LWSS + Patterns.Oscillators.PentaDecathlon + Patterns.Oscillators.Toad)
+//        game.loadLevel(Patterns.Rand.generate(40, 40))
+        game.loadLevel(Patterns.Generators.Acorn)
         var skippedFrames = 0
         while (isRunning) {
             if (!holder.surface.isValid) return
@@ -52,7 +54,7 @@ class RenderView @JvmOverloads constructor(
 
             canvas.drawRect(rect, paint)
             computeFrameStartNano = System.nanoTime()
-            if (skippedFrames > 60) {
+            if (skippedFrames > 0) {
                 game.update()
                 skippedFrames = 0
             } else {
