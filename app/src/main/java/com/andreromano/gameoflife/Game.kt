@@ -105,15 +105,27 @@ class Game {
         val maxMargin = 6
         val visibleCellsX = highX - lowX + maxMargin * 2
         val visibleCellsY = highY - lowY + maxMargin * 2
-        val cellSize = canvas.width / gridSize
-        if (viewportStartX > lowX || viewportEndX < highX) {
+        val cellSize: Int
+
+        val stretchViewport = true
+        if (stretchViewport) {
+            cellSize = canvas.width / maxOf(visibleCellsX, visibleCellsY)
             viewportStartX = lowX
-            viewportEndX = viewportStartX + gridSize
-        }
-        if (viewportStartY > lowY || viewportEndY < highY) {
+            viewportEndX = highX
             viewportStartY = lowY
-            viewportEndY = viewportStartY + gridSize
+            viewportEndY = highY
+        } else {
+            cellSize = canvas.width / gridSize
+            if (viewportStartX > lowX || viewportEndX < highX) {
+                viewportStartX = lowX
+                viewportEndX = viewportStartX + gridSize
+            }
+            if (viewportStartY > lowY || viewportEndY < highY) {
+                viewportStartY = lowY
+                viewportEndY = viewportStartY + gridSize
+            }
         }
+
 
         cells.forEach { cell ->
             val left = (cell.x - viewportStartX + 0) * cellSize
